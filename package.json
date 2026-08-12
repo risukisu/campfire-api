@@ -1,0 +1,11 @@
+{
+  "name": "campfire-api",
+  "version": "1.0.0",
+  "description": "Guestbook API for the campfire at risu.pl/campfire",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@upstash/ratelimit": "^2.0.5",
+    "@upstash/redis": "^1.34.3"
+  }
+}
