@@ -23,7 +23,18 @@ Guestbook for [risu.pl/campfire](https://risu.pl/campfire) — old internet styl
 |---|---|---|
 | `/api/entries` | GET | last 100 entries, newest first |
 | `/api/sign` | POST | validate + rate limit + LPUSH; returns created entry |
-| `/api/entry?id=` | DELETE | Bearer `ADMIN_TOKEN`; removes one entry |
+| `/api/entry?id=` | DELETE | Bearer `ADMIN_TOKEN`; removes one entry (and unfeatures it) |
+| `/api/feature?id=` | POST | Bearer `ADMIN_TOKEN`; features one entry, max 3 at once (409 past that) |
+| `/api/feature?id=` | DELETE | Bearer `ADMIN_TOKEN`; unfeatures one entry |
+
+## Featured stories (added 2026-09-30)
+
+The owner can feature up to 3 stories. On the page they are gold, slightly bigger, shimmer, and keep their card open. They always show in the sky, however old.
+
+- Stored as full entry copies in the hash `campfire:featured` (id → entry JSON), so the 200-entry list trim never drops them.
+- `GET /api/entries` returns them as `featured` next to `entries`; clients that don't know the field ignore it.
+- Deleting an entry via `/api/entry` also removes its featured copy.
+- Agent workflow ("feature X's story on the campfire") is documented in the blog repo's `CLAUDE.md` and in this repo's `CLAUDE.md`.
 
 ## Spam defense (instant publish, so layered)
 
